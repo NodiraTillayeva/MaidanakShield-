@@ -12,6 +12,7 @@ assets, or generated images.
 - **Sentinel Twin** ([src/detect/physics_twin.py](src/detect/physics_twin.py)) - an onboard kinematic digital twin that dead-reckons every fix to catch spoofing before the receiver is fooled.
 - **Maidanak Observatory** ([src/detect/optical_verify.py](src/detect/optical_verify.py)) - uses the real GPS constellation (ephemeris) as ground truth a spoofer cannot move.
 - **Pre-emptive alert** ([src/alert/preemptive.py](src/alert/preemptive.py)) - pre-warns aircraft on course into a flagged zone.
+- **AI signal classifier** ([ai_model/](ai_model/)) - a spectrogram-based GPS-attack classifier (6 classes: clean / jamming / chirp / spoofing / multipath / transition) with training + inference code, the trained model, and result figures. See [ai_model/AI_MODEL_README.md](ai_model/AI_MODEL_README.md).
 
 ## Quickstart
 
@@ -52,6 +53,11 @@ or pass `use_cache=True` after copying a sample into `data/`.
 │   ├── simulate/          # scenario + attacks (labelled test-bench, optional)
 │   ├── alert/             # preemptive ground->air handoff
 │   └── eval/              # metrics (ROC / precision / recall)
+├── ai_model/              # spectrogram GPS-attack classifier: training + inference
+│   │                      #   code, trained model, and result figures
+│   ├── train_*.py, inference_*.py, generate_spectrograms.py, *.m
+│   ├── ai_training_results/   # trained model (.pkl) + confusion matrix, etc.
+│   └── ai_inference_results/  # per-class prediction figures
 └── data_sample/           # real ADS-B + GPS TLE samples + labelled test-bench
 ```
 
