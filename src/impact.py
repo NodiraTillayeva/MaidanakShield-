@@ -103,8 +103,44 @@ def use_cases() -> dict:
     }
 
 
+def financials() -> dict:
+    """Business & financial plan (illustrative, from the Round-2 business case).
+
+    Three revenue streams, a phased rollout, market sizing, and a 5-year revenue
+    projection. All figures are stated assumptions you can challenge - not forecasts.
+    """
+    return {
+        "streams": [
+            {"name": "Hardware - Maidanak Shield", "price": "$50-100k / airport",
+             "recur": "+ $5k/yr support", "customer": "airports · ANSPs"},
+            {"name": "Software - Sentinel Twin licence", "price": "$200k / airline / yr",
+             "recur": "renewable, incl. model updates", "customer": "airlines · OEMs"},
+            {"name": "Managed service (aaS)", "price": "$40k / site / yr",
+             "recur": "bundled with operator training", "customer": "regional airports"},
+        ],
+        # 5-year revenue projection by stream ($M, illustrative ramp)
+        "years": ["Yr 1", "Yr 2", "Yr 3", "Yr 4", "Yr 5"],
+        "revenue_m": {
+            "Hardware":        [0.2, 0.8, 2.0, 4.0, 8.0],
+            "Software licence": [0.1, 0.7, 3.0, 9.0, 24.0],
+            "Managed service": [0.0, 0.3, 1.0, 3.0, 6.0],
+        },
+        "breakeven_year": 3,
+        # market sizing ($/yr, illustrative)
+        "market": {"TAM": 2.5e9, "SAM": 4.5e8, "SOM": 4.5e7,
+                   "airports_high_risk": 500, "aircraft_global": 10000,
+                   "cost_per_incident": "EUR 0.5-5M"},
+        "phases": [
+            ("Phase 1 · Yr 1", "Pilot: Tashkent & Samarkand + 2-3 regional carriers"),
+            ("Phase 2 · Yr 2-3", "Central Asia + E. Europe hubs; licence Sentinel Twin to Airbus"),
+            ("Phase 3 · Yr 4+", "Global rollout; licensing with air-navigation service providers"),
+        ],
+    }
+
+
 if __name__ == "__main__":
     import json
     print(json.dumps({"environmental_economic": environmental_economic(),
                       "affordability": affordability(),
-                      "assumptions": asdict(ImpactAssumptions())}, indent=2))
+                      "financials": financials(),
+                      "assumptions": asdict(ImpactAssumptions())}, indent=2, default=str))
